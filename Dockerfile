@@ -1,7 +1,7 @@
-FROM maven:3.8.6-amazoncorretto-17 AS builder
-WORKDIR /app
+FROM maven:latest as builder
+WORKDIR /build
 COPY . .
-RUN mvn install
+RUN mvn clean install -DskipTests
 
 FROM openjdk:17.0.2-jdk as deploy
 MAINTAINER BINOD PANT
