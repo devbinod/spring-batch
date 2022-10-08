@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
 
 
 import javax.persistence.EntityManagerFactory;
@@ -80,12 +82,20 @@ public class BatchConfiguration {
     }
 
     @Bean
+    public TaskExecutor taskExecutor() {
+        return new SimpleAsyncTaskExecutor("spring_batch");
+    }
+
+
+
+    @Bean
     public Step step() {
         return stepBuilderFactory.get("step")
-                .<Student, Student>chunk(1000)
+                .<Student, Student>chunk(10000)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())
+                .taskExecutor(taskExecutor())
                 .build();
     }
 }

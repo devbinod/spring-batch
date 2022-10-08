@@ -2,6 +2,7 @@ package edu.miu.cs590.config.jwt;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import edu.miu.cs590.config.jwt.JWTUtil;
+import edu.miu.cs590.exception.InvalidTokenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +49,8 @@ public class JWTFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
                 } catch (JWTVerificationException exc) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
+                    throw new InvalidTokenException("Invalid JWT token");
+//                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
                 }
             }
         }

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig {
 
     private UserRepository userRepository;

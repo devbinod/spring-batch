@@ -3,7 +3,7 @@ package edu.miu.cs590.controller;
 
 import edu.miu.cs590.config.jwt.JWTUtil;
 import edu.miu.cs590.dto.LoginDto;
-import edu.miu.cs590.entity.User;
+import edu.miu.cs590.exception.InvalidCredentialException;
 import edu.miu.cs590.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,7 +45,7 @@ public class AuthController {
 
             return Collections.singletonMap("jwt-token", token);
         } catch (AuthenticationException authExc) {
-            throw new RuntimeException("Invalid Login Credentials");
+            throw new InvalidCredentialException("Invalid Login Credentials");
         }
     }
 }
